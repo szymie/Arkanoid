@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="backgroundColor">#1a80b6</color>
+    <color name="backgroundColor">#384072</color>
+    <color name="brushColor">#E6D747</color>
     <color name="white">#FFFFFF</color>
-    <color name="brickColor">#f98100</color>
+    <color name="brickColor">#B05439</color>
 
 </resources>

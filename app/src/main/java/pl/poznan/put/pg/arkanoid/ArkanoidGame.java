@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Display;
@@ -99,9 +100,9 @@ public class ArkanoidGame extends BaseActivity {
         private int screenWidth;
         private int screenHeight;
 
-        private int backgroundColor = Color.argb(255, 26, 128, 182);
-        private int brushColor = Color.argb(255, 255, 255, 255);
-        private int brickColor = Color.argb(255, 249, 129, 0);
+        private int backgroundColor = ContextCompat.getColor(ArkanoidGame.this, R.color.backgroundColor);
+        private int brushColor =  ContextCompat.getColor(ArkanoidGame.this, R.color.brushColor);
+        private int brickColor = ContextCompat.getColor(ArkanoidGame.this, R.color.brickColor);
 
         private Board board;
         private Ball ball;
@@ -319,7 +320,7 @@ public class ArkanoidGame extends BaseActivity {
                 paint.setColor(brushColor);
 
                 canvas.drawRect(board.getRect(), paint);
-                canvas.drawRect(ball.getRect(), paint);
+                canvas.drawCircle(ball.getRect().centerX(), ball.getRect().centerY(), ball.getWidth() / 2, paint);
 
                 drawBricks();
 
