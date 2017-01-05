@@ -32,8 +32,9 @@ import java.util.List;
 
 public class ArkanoidGame extends BaseActivity {
 
-    private ArkanoidView arkanoidView;
     private static final String TAG = "Arkanoid";
+    private ArkanoidView arkanoidView;
+    private OrientationData orientationData;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -44,6 +45,8 @@ public class ArkanoidGame extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         arkanoidView = new ArkanoidView(this, 4, 8, 3);
+        orientationData = new OrientationData(this);
+        orientationData.register();
         Log.v(TAG, "onCreate");
         setContentView(arkanoidView);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -97,6 +100,7 @@ public class ArkanoidGame extends BaseActivity {
         private Paint paint;
         private long fps;
         private long timeThisFrame;
+        private long startFrameTime;
         private int screenWidth;
         private int screenHeight;
 
@@ -177,7 +181,8 @@ public class ArkanoidGame extends BaseActivity {
 
             while (playing) {
 
-                long startFrameTime = System.currentTimeMillis();
+                long elapsedTime = System.currentTimeMillis() - startFrameTime;
+                startFrameTime = System.currentTimeMillis();
 
                 if (!paused) {
                     update();
