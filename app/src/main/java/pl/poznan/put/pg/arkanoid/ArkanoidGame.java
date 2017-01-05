@@ -133,7 +133,7 @@ public class ArkanoidGame extends BaseActivity {
 
             initScreenDimensions();
 
-            board = new Board(200, 400, screenWidth, screenHeight, 400);
+            board = new Board(200, 400, screenWidth, screenHeight/*, 400*/);
             ball = new Ball(15, 15, 200, -400);
             this.numberOfRows = numberOfRows;
             this.numberOfColumns = numberOfColumns;
@@ -185,7 +185,7 @@ public class ArkanoidGame extends BaseActivity {
                 startFrameTime = System.currentTimeMillis();
 
                 if (!paused) {
-                    update();
+                    update(elapsedTime);
                 }
 
                 draw();
@@ -198,9 +198,18 @@ public class ArkanoidGame extends BaseActivity {
             }
         }
 
-        public void update() {
+        public void update(long elapsedTime) {
 
-            board.update(fps);
+            if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
+
+                float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
+
+                float boardSpeed = -pitch * screenWidth / 1000f;
+
+                float delta = Math.abs(boardSpeed * elapsedTime) > 3 ? boardSpeed * elapsedTime : 0;
+                board.update(delta);
+            }
+
             ball.update(fps);
 
             handleBricksCollision();
@@ -241,8 +250,6 @@ public class ArkanoidGame extends BaseActivity {
                     currentBricksNumber--;
 
                     lastPointTimestamp = System.currentTimeMillis();
-
-                    break;
                 }
             }
         }
@@ -408,17 +415,18 @@ public class ArkanoidGame extends BaseActivity {
                         currentLivesNumber = initialLivesNumber;
                         points = 0;
                         createBricksAndRestart();
+                        orientationData.newGame();
                     }
 
-                    if (motionEvent.getX() > screenWidth / 2) {
+                    /*if (motionEvent.getX() > screenWidth / 2) {
                         board.setMovementState(Board.RIGHT);
                     } else {
                         board.setMovementState(Board.LEFT);
-                    }
+                    }*/
 
                     break;
                 case MotionEvent.ACTION_UP:
-                    board.setMovementState(Board.STOP);
+                    //board.setMovementState(Board.STOP);
                     break;
             }
 

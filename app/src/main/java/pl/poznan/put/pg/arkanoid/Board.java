@@ -1,6 +1,7 @@
 package pl.poznan.put.pg.arkanoid;
 
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Board {
 
@@ -17,18 +18,18 @@ public class Board {
     private int movementState = STOP;
     private int screenWidth;
 
-    public Board(int boardWidth, int boardHeight, int screenWidth, int screenHeight, int speed) {
+    public Board(int boardWidth, int boardHeight, int screenWidth, int screenHeight/*, int speed*/) {
 
         width = boardWidth;
         height = boardHeight;
 
-        x = screenWidth / 2;
+        x = screenWidth / 2 - width / 2;
         y = screenHeight - height;
 
         rect = new RectF(x, y, x + width, y + height);
 
         this.screenWidth = screenWidth;
-        this.speed = speed;
+        this.speed = 0;
     }
 
     public RectF getRect() {
@@ -39,13 +40,9 @@ public class Board {
         this.movementState = movementState;
     }
 
-    public void update(long fps) {
+    public void update(float delta) {
 
-        if(movementState == LEFT) {
-            x = Math.max(x - speed / fps, 0);
-        } else if(movementState == RIGHT) {
-            x = Math.min(x + speed / fps, screenWidth - width);
-        }
+        x = Math.min(Math.max(x + delta, 0), screenWidth - width);
 
         rect.left = x;
         rect.right = x + width;
