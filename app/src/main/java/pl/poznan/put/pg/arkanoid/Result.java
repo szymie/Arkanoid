@@ -46,6 +46,11 @@ public class Result implements Serializable, Comparable {
     @Override
     public int compareTo(Object o) {
         Result result = (Result) o;
-        return result.points - points;
+
+        if((result.lives == 0 && lives == 0) || (result.lives != 0 && lives != 0)) {
+            return result.points - points;
+        } else  {
+            return result.lives - lives;
+        }
     }
 }

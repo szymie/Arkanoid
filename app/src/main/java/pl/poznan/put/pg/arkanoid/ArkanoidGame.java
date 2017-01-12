@@ -204,9 +204,9 @@ public class ArkanoidGame extends BaseActivity {
 
                 float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
 
-                float boardSpeed = -pitch * screenWidth / 1000f;
+                float boardSpeed = -pitch * screenWidth / 800f;
 
-                float delta = Math.abs(boardSpeed * elapsedTime) > 3 ? boardSpeed * elapsedTime : 0;
+                float delta = Math.abs(boardSpeed * elapsedTime) > 1 ? boardSpeed * elapsedTime : 0;
                 board.update(delta);
             }
 
@@ -244,7 +244,7 @@ public class ArkanoidGame extends BaseActivity {
                     bricks[i].setInvisible();
 
                     ball.reverseYVelocity();
-                    ball.increaseSpeed(10);
+                    ball.increaseSpeed(30);
 
                     points += 1 + streak;
                     currentBricksNumber--;
